@@ -1,0 +1,369 @@
+/* =====================
+   Design Tokens
+   ===================== */
+:root {
+  --color-bg:          #0f0f1a;
+  --color-surface:     #1a1a2e;
+  --color-surface-alt: #16213e;
+  --color-border:      #2a2a4a;
+
+  --color-x:           #e94560;
+  --color-x-dim:       rgba(233, 69, 96, 0.18);
+  --color-o:           #4cc9f0;
+  --color-o-dim:       rgba(76, 201, 240, 0.18);
+  --color-draw:        #f5a623;
+
+  --color-text:        #e0e0f0;
+  --color-text-muted:  #6b6b9a;
+
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --transition:  0.2s ease;
+}
+
+/* =====================
+   Reset & Base
+   ===================== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+}
+
+/* =====================
+   App Layout
+   ===================== */
+.app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  max-width: 480px;
+}
+
+/* =====================
+   Header
+   ===================== */
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--color-x), var(--color-o));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* =====================
+   Scoreboard
+   ===================== */
+.scoreboard {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+.score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  background: var(--color-surface-alt);
+  border-radius: var(--radius-md);
+  padding: 14px 12px;
+  border: 1px solid var(--color-border);
+}
+
+.score-card--x   { border-top: 3px solid var(--color-x); }
+.score-card--o   { border-top: 3px solid var(--color-o); }
+.score-card--draw { border-top: 3px solid var(--color-draw); }
+
+.score-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
+.score-value {
+  font-size: 2rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.score-card--x   .score-value { color: var(--color-x); }
+.score-card--o   .score-value { color: var(--color-o); }
+.score-card--draw .score-value { color: var(--color-draw); }
+
+.score-value--bump {
+  animation: scoreBump 0.35s ease forwards;
+}
+
+/* =====================
+   Game Area
+   ===================== */
+.game-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+}
+
+/* =====================
+   Status Bar
+   ===================== */
+.status-bar {
+  min-height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-text {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+  transition: color var(--transition);
+}
+
+/* =====================
+   Board
+   ===================== */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+.board--locked .cell:not(.cell--x):not(.cell--o) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* =====================
+   Cells
+   ===================== */
+.cell {
+  aspect-ratio: 1 / 1;
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: clamp(2.5rem, 10vw, 4rem);
+  font-weight: 800;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    transform var(--transition),
+    box-shadow var(--transition);
+  color: transparent;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cell:hover:not(.cell--x):not(.cell--o):not(:disabled) {
+  background: var(--color-surface-alt);
+  border-color: #3a3a6a;
+  transform: scale(1.03);
+}
+
+.cell--x {
+  color: var(--color-x);
+  text-shadow: 0 0 20px rgba(233, 69, 96, 0.6);
+  border-color: rgba(233, 69, 96, 0.3);
+  cursor: default;
+}
+
+.cell--o {
+  color: var(--color-o);
+  text-shadow: 0 0 20px rgba(76, 201, 240, 0.6);
+  border-color: rgba(76, 201, 240, 0.3);
+  cursor: default;
+}
+
+.cell--played {
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.cell--win[data-player="x"] {
+  background: var(--color-x-dim);
+  border-color: var(--color-x);
+  animation: winPulseX 1.2s ease-in-out infinite;
+  transform: scale(1.05);
+}
+
+.cell--win[data-player="o"] {
+  background: var(--color-o-dim);
+  border-color: var(--color-o);
+  animation: winPulseO 1.2s ease-in-out infinite;
+  transform: scale(1.05);
+}
+
+/* =====================
+   Controls
+   ===================== */
+.controls {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* =====================
+   Buttons
+   ===================== */
+.btn {
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 12px 28px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition:
+    background var(--transition),
+    box-shadow var(--transition),
+    transform var(--transition),
+    border-color var(--transition);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, #e94560, #c73652);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(233, 69, 96, 0.3);
+}
+
+.btn--primary:hover {
+  box-shadow: 0 6px 24px rgba(233, 69, 96, 0.5);
+  transform: translateY(-1px);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 2px solid var(--color-border);
+}
+
+.btn--ghost:hover {
+  border-color: #4a4a7a;
+  color: var(--color-text);
+}
+
+/* =====================
+   Overlay
+   ===================== */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 100;
+}
+
+.overlay--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay__card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 48px 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  box-shadow: var(--shadow-card);
+  transform: scale(0.85) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.overlay--visible .overlay__card {
+  transform: scale(1) translateY(0);
+}
+
+.overlay__result {
+  font-size: 1.75rem;
+  font-weight: 800;
+  text-align: center;
+  letter-spacing: -0.01em;
+}
+
+/* =====================
+   Keyframe Animations
+   ===================== */
+@keyframes popIn {
+  0%   { transform: scale(0) rotate(-15deg); opacity: 0; }
+  60%  { transform: scale(1.2) rotate(5deg);  opacity: 1; }
+  100% { transform: scale(1)   rotate(0deg);  opacity: 1; }
+}
+
+@keyframes winPulseX {
+  0%, 100% { box-shadow: 0 0 0   0 transparent; }
+  50%       { box-shadow: 0 0 24px 4px rgba(233, 69, 96, 0.6); }
+}
+
+@keyframes winPulseO {
+  0%, 100% { box-shadow: 0 0 0   0 transparent; }
+  50%       { box-shadow: 0 0 24px 4px rgba(76, 201, 240, 0.6); }
+}
+
+@keyframes scoreBump {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+/* =====================
+   Responsive
+   ===================== */
+@media (max-width: 420px) {
+  .board  { gap: 8px; }
+  .scoreboard { gap: 8px; }
+  .score-card { padding: 10px 8px; }
+  .overlay__card { padding: 36px 28px; }
+  .title  { font-size: 1.75rem; }
+}

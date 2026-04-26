@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="header">
+        <h1 class="title">Tic-Tac-Toe</h1>
+        <div class="scoreboard">
+          <div class="score-card score-card--x">
+            <span class="score-label">Player X</span>
+            <span class="score-value" id="wins-x">0</span>
+          </div>
+          <div class="score-card score-card--draw">
+            <span class="score-label">Draws</span>
+            <span class="score-value" id="wins-draw">0</span>
+          </div>
+          <div class="score-card score-card--o">
+            <span class="score-label">Player O</span>
+            <span class="score-value" id="wins-o">0</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="game-area">
+        <div class="status-bar">
+          <p class="status-text" id="status-text">Player X's turn</p>
+        </div>
+
+        <div class="board" id="board" role="grid" aria-label="Tic-Tac-Toe board">
+          <button class="cell" data-index="0" role="gridcell" aria-label="Cell 1"></button>
+          <button class="cell" data-index="1" role="gridcell" aria-label="Cell 2"></button>
+          <button class="cell" data-index="2" role="gridcell" aria-label="Cell 3"></button>
+          <button class="cell" data-index="3" role="gridcell" aria-label="Cell 4"></button>
+          <button class="cell" data-index="4" role="gridcell" aria-label="Cell 5"></button>
+          <button class="cell" data-index="5" role="gridcell" aria-label="Cell 6"></button>
+          <button class="cell" data-index="6" role="gridcell" aria-label="Cell 7"></button>
+          <button class="cell" data-index="7" role="gridcell" aria-label="Cell 8"></button>
+          <button class="cell" data-index="8" role="gridcell" aria-label="Cell 9"></button>
+        </div>
+
+        <div class="controls">
+          <button class="btn btn--primary" id="btn-restart">New Game</button>
+          <button class="btn btn--ghost" id="btn-reset-scores">Reset Scores</button>
+        </div>
+      </section>
+    </main>
+
+    <div class="overlay" id="overlay" aria-hidden="true">
+      <div class="overlay__card">
+        <p class="overlay__result" id="overlay-result">Player X Wins!</p>
+        <button class="btn btn--primary" id="btn-play-again">Play Again</button>
+      </div>
+    </div>
+
+    <script src="game.js"></script>
+  </body>
+</html>
