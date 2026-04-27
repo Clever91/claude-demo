@@ -6,7 +6,11 @@ Learning project for exploring Claude Code features.
 
 ```
 claude-demo/
-└── tic-tac-toe/      # Browser-based game (pure HTML/CSS/JS)
+├── tic-tac-toe/      # Browser-based game (pure HTML/CSS/JS)
+│   ├── index.html
+│   ├── style.css
+│   └── game.js
+└── space-shooter/    # Browser-based game (pure HTML/CSS/JS)
     ├── index.html
     ├── style.css
     └── game.js
