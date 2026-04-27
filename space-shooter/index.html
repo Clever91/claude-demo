@@ -9,41 +9,86 @@
   <body>
     <main class="game-shell">
       <header class="hud">
-        <div class="hud__item">
-          <span class="hud__label">Score</span>
-          <span class="hud__value" id="score">0</span>
+        <div class="hud__group">
+          <div class="hud__item">
+            <span class="hud__label">Score</span>
+            <span class="hud__value" id="score">0</span>
+          </div>
+          <div class="hud__item">
+            <span class="hud__label">Level</span>
+            <span class="hud__value hud__value--level" id="level">1</span>
+          </div>
         </div>
         <h1 class="title">NEON SHOOTER</h1>
         <div class="hud__item hud__item--right">
           <span class="hud__label">Lives</span>
           <span class="hud__value hud__value--lives" id="lives">♥ ♥ ♥</span>
         </div>
+        <button class="btn-settings" id="btn-settings" title="Settings">⚙</button>
       </header>
 
       <div class="canvas-wrap">
-        <canvas id="game" width="800" height="600"></canvas>
+        <div class="game-area" id="game-area">
+          <canvas id="game"></canvas>
 
-        <div class="overlay overlay--start" id="overlay-start">
-          <h2 class="overlay__title">READY?</h2>
-          <p class="overlay__hint">
-            <kbd>←</kbd> <kbd>→</kbd> move &nbsp;·&nbsp;
-            <kbd>Space</kbd> shoot
-          </p>
-          <button class="btn" id="btn-start">START GAME</button>
+          <div class="overlay overlay--start" id="overlay-start">
+            <h2 class="overlay__title">READY?</h2>
+            <p class="overlay__hint">
+              <kbd>←</kbd> <kbd>→</kbd> move &nbsp;·&nbsp;
+              <kbd>Space</kbd> shoot &nbsp;·&nbsp;
+              <kbd>Enter</kbd> start
+            </p>
+            <button class="btn" id="btn-start">START GAME</button>
+          </div>
+
+          <div class="overlay overlay--end hidden" id="overlay-end">
+            <h2 class="overlay__title overlay__title--end">GAME OVER</h2>
+            <p class="overlay__final">
+              Final Score: <span id="final-score">0</span>
+            </p>
+            <button class="btn" id="btn-restart">PLAY AGAIN</button>
+          </div>
+
+          <div class="level-up" id="level-up">
+            <div class="level-up__title">LEVEL <span id="level-up-num">2</span></div>
+            <div class="level-up__mode" id="level-up-mode">RAPID FIRE</div>
+          </div>
         </div>
 
-        <div class="overlay overlay--end hidden" id="overlay-end">
-          <h2 class="overlay__title overlay__title--end">GAME OVER</h2>
-          <p class="overlay__final">
-            Final Score: <span id="final-score">0</span>
-          </p>
-          <button class="btn" id="btn-restart">PLAY AGAIN</button>
+        <div class="settings-panel" id="settings-panel">
+          <h3 class="settings-panel__title">SETTINGS</h3>
+
+          <div class="settings-row">
+            <label class="settings-label" for="screen-size">Screen Size</label>
+            <div class="settings-control">
+              <select class="select" id="screen-size">
+                <option value="full">Full Screen</option>
+                <option value="1280x720">Large (1280×720)</option>
+                <option value="1024x768">Medium (1024×768)</option>
+                <option value="800x600">Original (800×600)</option>
+                <option value="640x480">Small (640×480)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <label class="settings-label" for="enemy-speed">Enemy Speed</label>
+            <div class="settings-control">
+              <input class="slider" type="range" id="enemy-speed" min="1" max="5" step="0.5" value="2" />
+              <span class="settings-value" id="enemy-speed-val">2</span>
+            </div>
+          </div>
+
+          <div class="settings-row">
+            <label class="settings-label" for="bg-color">Background Color</label>
+            <div class="settings-control">
+              <input type="color" id="bg-color" value="#02000a" class="color-picker" />
+            </div>
+          </div>
+
+          <button class="btn btn--small" id="btn-close-settings">CLOSE</button>
         </div>
       </div>
-
-      <footer class="footer">
-        <p>Built with Claude Code · HTML Canvas + Vanilla JS</p>
-      </footer>
     </main>
 
     <script src="game.js"></script>
