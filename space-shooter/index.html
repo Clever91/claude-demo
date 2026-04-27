@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Neon Space Shooter</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <header class="hud">
+        <div class="hud__item">
+          <span class="hud__label">Score</span>
+          <span class="hud__value" id="score">0</span>
+        </div>
+        <h1 class="title">NEON SHOOTER</h1>
+        <div class="hud__item hud__item--right">
+          <span class="hud__label">Lives</span>
+          <span class="hud__value hud__value--lives" id="lives">♥ ♥ ♥</span>
+        </div>
+      </header>
+
+      <div class="canvas-wrap">
+        <canvas id="game" width="800" height="600"></canvas>
+
+        <div class="overlay overlay--start" id="overlay-start">
+          <h2 class="overlay__title">READY?</h2>
+          <p class="overlay__hint">
+            <kbd>←</kbd> <kbd>→</kbd> move &nbsp;·&nbsp;
+            <kbd>Space</kbd> shoot
+          </p>
+          <button class="btn" id="btn-start">START GAME</button>
+        </div>
+
+        <div class="overlay overlay--end hidden" id="overlay-end">
+          <h2 class="overlay__title overlay__title--end">GAME OVER</h2>
+          <p class="overlay__final">
+            Final Score: <span id="final-score">0</span>
+          </p>
+          <button class="btn" id="btn-restart">PLAY AGAIN</button>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <p>Built with Claude Code · HTML Canvas + Vanilla JS</p>
+      </footer>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>
